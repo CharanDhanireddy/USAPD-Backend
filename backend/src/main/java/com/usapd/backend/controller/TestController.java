@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.usapd.backend.repository.TestRepository;
 
 import java.util.List;
 
@@ -15,11 +14,9 @@ import java.util.List;
 @RequestMapping(path = "/api/v1")
 public class TestController {
 
-    @Autowired
-    TestRepository testRepository;
-    
     private final TestService testService;
 
+    @Autowired
     public TestController(TestService testService){
         this.testService = testService;
     }
@@ -29,8 +26,9 @@ public class TestController {
         return "Hey!";
     }
 
+
     @GetMapping(path = "/getList")
     public List<Test> check2(){
-        return (List<Test>) testRepository.findAll();
+        return testService.getAllNames();
     }
 }
