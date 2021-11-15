@@ -2,6 +2,7 @@ package com.usapd.backend.service;
 
 import com.usapd.backend.entity.Test;
 import com.usapd.backend.repository.TestRepository;
+import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,14 @@ public class TestService {
         this.testRepository = testRepository;
     }
 
-    public List<Test> getAllNames(){
-        return (List<Test>) testRepository.findAll();
+    public String getAllNames(){
+        List<Test> allItems = testRepository.findAll();
+        return allItems.toString();
     }
+
+    public String getUsers(String username){
+        List<JSONObject> allItems = testRepository.selectUsersByUsername(username);
+        return allItems.toString();
+    }
+
 }

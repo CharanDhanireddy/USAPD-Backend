@@ -1,14 +1,12 @@
 package com.usapd.backend.controller;
 
-import com.usapd.backend.entity.Test;
 import com.usapd.backend.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
-import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/v1")
@@ -23,12 +21,16 @@ public class TestController {
 
     @GetMapping
     public String check(){
-        return "Hey!";
+        return "Hi";
     }
 
-
     @GetMapping(path = "/getList")
-    public List<Test> check2(){
+    public String check2() {
         return testService.getAllNames();
+    }
+
+    @GetMapping(path = "/getList/{username}")
+    public String getListFromUsernames(@PathVariable("username") String username){
+        return testService.getUsers(username);
     }
 }
