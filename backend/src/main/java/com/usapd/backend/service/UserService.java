@@ -31,19 +31,17 @@ public class UserService {
 
     public Users getUserData(String email_ID, String password){
         Optional<UserCredentials> uc = userCredentialRepository.findById(email_ID);
-        System.out.println(uc.get().PASSWORD +  password);
         if(uc.isPresent() && uc.get().PASSWORD.equals(password)){
-            System.out.println("HERE");
             return userRepository.findById(email_ID).get();
         }
         return null;
     }
 
-    public Users addUserData(String email_ID, String user_name, Integer state_code){
+    public Users addUserData(String email_ID, Integer state_code){
 
         Users user = new Users();
         user.EMAIL_ID = email_ID;
-        user.USER_NAME = user_name;
+        user.USER_NAME = email_ID;
         user.STATE_CODE = state_code;
         Users savedUserData = userRepository.saveAndFlush(user);
         return savedUserData;
