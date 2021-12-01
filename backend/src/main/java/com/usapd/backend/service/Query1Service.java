@@ -17,11 +17,11 @@ public class Query1Service {
         this.query1Repository = query1Repository;
     }
 
-    public String getQuery1Results(String pollutant, String state){
+    public String getQuery1Results(String pollutant, String state, String startDate, String endDate){
 //        query1Repository.createViewForStateSiteMapping(state);
 //        query1Repository.createViewForObsPollutant(pollutant);
 //        query1Repository.createViewForDateWeek();
-          List<JSONObject> q1List = query1Repository.getPollutantDataByState(pollutant, state);
+          List<JSONObject> q1List = query1Repository.getPollutantDataByState(pollutant, state, startDate, endDate);
 
         return q1List.toString();
     }

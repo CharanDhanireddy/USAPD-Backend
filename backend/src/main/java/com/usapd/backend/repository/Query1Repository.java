@@ -103,10 +103,9 @@ public interface Query1Repository extends JpaRepository<Test, Integer> {
                 "                            || '/'" +
                 "                            || dc.year, 'MM/DD/YYYY'), 'WW') AS week from vdhavaleswarapu.datecollected dc) dc " +
                 "ON     ap.date_id = dc.date_id " +
-                "WHERE               rownum < 20" +
                 "       group BY dc.year, dc.week " +
                 "       order BY dc.year, dc.week",
             nativeQuery = true)
-    List<JSONObject> getPollutantDataByState(String pollutant, String state);
+    List<JSONObject> getPollutantDataByState(String pollutant, String state, String startDate, String endDate);
 
 }

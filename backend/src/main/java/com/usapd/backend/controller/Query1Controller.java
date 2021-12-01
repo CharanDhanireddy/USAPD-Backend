@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
+@CrossOrigin
 @RequestMapping(path = "/api/v1/query1")
 public class Query1Controller {
 
@@ -22,7 +23,12 @@ public class Query1Controller {
     }
 
     @GetMapping(path = "/getData")
-    public String getListFromUsernames(@RequestParam("state") String state, @RequestParam("pollutant") String pollutant){
-        return query1Service.getQuery1Results(pollutant, state);
+    public String getListFromUsernames(@RequestParam("state") String state,
+                                       @RequestParam("pollutant") String pollutant,
+                                       @RequestParam("start") String startDate,
+                                       @RequestParam("end") String endDate) {
+        System.out.println(pollutant);
+        System.out.println(state);
+        return query1Service.getQuery1Results(pollutant, state, startDate, endDate);
     }
 }
