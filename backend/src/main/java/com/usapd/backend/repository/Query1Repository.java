@@ -87,7 +87,7 @@ public interface Query1Repository extends JpaRepository<Test, Integer> {
                 "                                                 ON     county.state_code = state.state_code" +
                 "                                                 JOIN   vdhavaleswarapu.site site" +
                 "                                                 ON     site.county_code = county.county_code" +
-                "                                                 WHERE  state_name = :state)))) ap " +
+                "                                                 WHERE  state_name = :state )))) ap " +
                 "JOIN" +
                 "       (" +
                 "              SELECT dc.date_id," +
@@ -101,7 +101,7 @@ public interface Query1Repository extends JpaRepository<Test, Integer> {
                 "                            || '/'" +
                 "                            || dc.day" +
                 "                            || '/'" +
-                "                            || dc.year, 'MM/DD/YYYY'), 'WW') AS week from vdhavaleswarapu.datecollected dc) dc " +
+                "                            || dc.year, 'MM/DD/YYYY'), 'WW') AS week from vdhavaleswarapu.datecollected dc where (dc.month || '/' || dc.day || '/' || dc.year) between :startDate and :endDate ) dc " +
                 "ON     ap.date_id = dc.date_id " +
                 "       group BY dc.year, dc.week " +
                 "       order BY dc.year, dc.week",
