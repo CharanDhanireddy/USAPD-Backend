@@ -87,7 +87,7 @@ public interface Query1Repository extends JpaRepository<Test, Integer> {
                 "                                                 ON     county.state_code = state.state_code" +
                 "                                                 JOIN   vdhavaleswarapu.site site" +
                 "                                                 ON     site.county_code = county.county_code" +
-                "                                                 WHERE  state_name = :state)))) ap " +
+                "                                                 WHERE  state_name = :state )))) ap " +
                 "JOIN" +
                 "       (" +
                 "              SELECT dc.date_id," +
@@ -101,12 +101,14 @@ public interface Query1Repository extends JpaRepository<Test, Integer> {
                 "                            || '/'" +
                 "                            || dc.day" +
                 "                            || '/'" +
-                "                            || dc.year, 'MM/DD/YYYY'), 'WW') AS week from vdhavaleswarapu.datecollected dc) dc " +
+                "                            || dc.year, 'MM/DD/YYYY'), 'WW') AS week from vdhavaleswarapu.datecollected dc" +
+                "                   WHERE TO_DATE(dc.month || '/' || dc.day || '/' || dc.year, 'MM/DD/YYYY')" +
+                "                   BETWEEN TO_DATE(:startDate, 'MM/DD/YYYY')" +
+                "                       AND TO_DATE(:endDate, 'MM/DD/YYYY') ) dc " +
                 "ON     ap.date_id = dc.date_id " +
-                "WHERE               rownum < 20" +
                 "       group BY dc.year, dc.week " +
                 "       order BY dc.year, dc.week",
             nativeQuery = true)
-    List<JSONObject> getPollutantDataByState(String pollutant, String state);
+    List<JSONObject> getPollutantDataByState(String pollutant, String state, String startDate, String endDate);
 
 }
