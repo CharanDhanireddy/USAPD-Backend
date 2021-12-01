@@ -101,7 +101,10 @@ public interface Query1Repository extends JpaRepository<Test, Integer> {
                 "                            || '/'" +
                 "                            || dc.day" +
                 "                            || '/'" +
-                "                            || dc.year, 'MM/DD/YYYY'), 'WW') AS week from vdhavaleswarapu.datecollected dc where (dc.month || '/' || dc.day || '/' || dc.year) between :startDate and :endDate ) dc " +
+                "                            || dc.year, 'MM/DD/YYYY'), 'WW') AS week from vdhavaleswarapu.datecollected dc" +
+                "                   WHERE TO_DATE(dc.month || '/' || dc.day || '/' || dc.year, 'MM/DD/YYYY')" +
+                "                   BETWEEN TO_DATE(:startDate, 'MM/DD/YYYY')" +
+                "                       AND TO_DATE(:endDate, 'MM/DD/YYYY') ) dc " +
                 "ON     ap.date_id = dc.date_id " +
                 "       group BY dc.year, dc.week " +
                 "       order BY dc.year, dc.week",

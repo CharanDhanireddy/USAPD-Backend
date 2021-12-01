@@ -27,8 +27,8 @@ public class Query1Controller {
                                        @RequestParam("pollutant") String pollutant,
                                        @RequestParam("start") String startDate,
                                        @RequestParam("end") String endDate) {
-        System.out.println(pollutant);
-        System.out.println(state);
+        System.out.println(startDate);
+        System.out.println(endDate);
         return query1Service.getQuery1Results(pollutant, state, startDate, endDate);
     }
 }
