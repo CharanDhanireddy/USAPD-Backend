@@ -18,11 +18,7 @@ public class Query2Service {
     }
 
     public String getQuery2Results(String pollutant, String state){
-//        query1Repository.createViewForStateSiteMapping(state);
-//        query1Repository.createViewForObsPollutant(pollutant);
-//        query1Repository.createViewForDateWeek();
         List<JSONObject> q2List = query2Repository.getDayOfWeekPollutantDataByState(pollutant, state);
-
         return q2List.toString();
     }
 }

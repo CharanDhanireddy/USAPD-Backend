@@ -18,8 +18,8 @@ public class Query2Controller {
     }
 
     @GetMapping
-    public String check(){
-        return "Hi";
+    public String routeCheck(){
+        return "API route is working!";
     }
 
     @GetMapping(path = "/getData")

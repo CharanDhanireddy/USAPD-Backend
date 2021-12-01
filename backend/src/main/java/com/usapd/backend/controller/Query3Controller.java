@@ -1,20 +1,20 @@
 package com.usapd.backend.controller;
 
-import com.usapd.backend.service.Query1Service;
+import com.usapd.backend.service.Query3Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 
 @RestController
 @CrossOrigin
-@RequestMapping(path = "/api/v1/query1")
-public class Query1Controller {
+@RequestMapping(path = "/api/v1/query3")
+public class Query3Controller {
 
-    private final Query1Service query1Service;
+    private final Query3Service query3Service;
 
     @Autowired
-    public Query1Controller(Query1Service query1Service){
-        this.query1Service = query1Service;
+    public Query3Controller(Query3Service query3Service){
+        this.query3Service = query3Service;
     }
 
     @GetMapping
@@ -27,6 +27,6 @@ public class Query1Controller {
                                        @RequestParam("pollutant") String pollutant,
                                        @RequestParam("start") String startDate,
                                        @RequestParam("end") String endDate) {
-        return query1Service.getQuery1Results(pollutant, state, startDate, endDate);
+        return query3Service.getQuery3Results(pollutant, state, startDate, endDate);
     }
 }
