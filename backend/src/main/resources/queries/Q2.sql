@@ -1,6 +1,6 @@
 SELECT dateData.year,
        dateData.weekday,
-       avg(ap.arithmetic_mean) AS meanValue
+       round(avg(ap.arithmetic_mean), 3) AS meanValue
 FROM
     (SELECT *
      FROM vdhavaleswarapu.observation o where(o.pollutant_code =

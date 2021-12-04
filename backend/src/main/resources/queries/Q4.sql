@@ -1,7 +1,6 @@
-SELECT dateData.year,
-       dateData.month,
-       siteData.state_name AS state,
-       Avg(multiStatePollutantData.arithmetic_mean) AS meanValue
+SELECT concat(to_char(multiStatePollutantData.date_str2, 'MONTH'),
+              extract(year from multiStatePollutantData.date_str2)) as timeline, siteData.state_name AS state,
+       round(Avg(multiStatePollutantData.arithmetic_mean),3) AS meanValue
 FROM
     (SELECT *
      FROM vdhavaleswarapu.observation o
@@ -16,20 +15,12 @@ FROM
                   FROM vdhavaleswarapu.state state
                            JOIN vdhavaleswarapu.county county ON county.state_code = state.state_code
                            JOIN vdhavaleswarapu.site site ON site.county_code = county.county_code
-                  WHERE state_name IN :state_list )))) multiStatePollutantData
-        JOIN
-    (SELECT dc.date_id,
-            dc.year,
-            To_char(dc.datestr, 'MM') AS MONTH
-     FROM vdhavaleswarapu.datecollected dc
-     WHERE dc.datestr BETWEEN :startDate AND :endDate ) dateData ON multiStatePollutantData.date_id = dateData.date_id
+                  WHERE state_name IN :state_list )))
+       AND (o.date_str2 BETWEEN :startDate AND :endDate)) multiStatePollutantData
         JOIN
     (SELECT site_code,
             state_name
      FROM vdhavaleswarapu.state s
-              JOIN vdhavaleswarapu.site si ON s.state_code = si.state_code) siteData ON siteData.site_code = multiStatePollutantData.site_code GROUP  BY siteData.state_name,
-                                                                                                                                                         dateData.year,
-                                                                                                                                                         dateData.month
-ORDER  BY siteData.state_name,
-          dateData.month,
-          dateData.year;
+              JOIN vdhavaleswarapu.site si ON s.state_code = si.state_code) siteData ON siteData.site_code = multiStatePollutantData.site_code
+GROUP  BY concat(to_char(multiStatePollutantData.date_str2, 'MONTH'), extract(year from multiStatePollutantData.date_str2)), siteData.state_name
+ORDER  BY siteData.state_name;
