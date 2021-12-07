@@ -5,7 +5,7 @@ SELECT * FROM
       FROM
           (SELECT to_char(aqiData.dateVal, 'YYYY') year,
           aqiData.dateVal,
-          to_char(aqiData.dateVal, 'MONTH') month,
+          to_char(aqiData.dateVal, 'MM') month,
           avg(aqiData.aqi) avgAQI
           FROM
           (SELECT date_str2 as dateVal,
@@ -23,7 +23,7 @@ SELECT * FROM
           ) aqiData
           WHERE aqiData.aqi != 0
           GROUP BY to_char(aqiData.dateVal, 'YYYY'),
-          to_char(aqiData.dateVal, 'MONTH'),
+          to_char(aqiData.dateVal, 'MM'),
           aqiData.dateVal)
       WHERE avgAQI >= :threshold
       GROUP BY MONTH,
@@ -35,7 +35,7 @@ SELECT * FROM
       FROM
           (SELECT to_char(aqiData.dateVal, 'YYYY') year,
           aqiData.dateVal,
-          to_char(aqiData.dateVal, 'MONTH') month,
+          to_char(aqiData.dateVal, 'MM') month,
           avg(aqiData.aqi) avgAQI
           FROM
           (SELECT date_str2 as dateVal,
@@ -53,8 +53,9 @@ SELECT * FROM
           ) aqiData
           WHERE aqiData.aqi != 0
           GROUP BY to_char(aqiData.dateVal, 'YYYY'),
-          to_char(aqiData.dateVal, 'MONTH'),
+          to_char(aqiData.dateVal, 'MM'),
           aqiData.dateVal)
       GROUP BY MONTH,
           YEAR
-      HAVING max(avgAQI) < :threshold));
+      HAVING max(avgAQI) < :threshold))
+ORDER BY YEAR, MONTH;

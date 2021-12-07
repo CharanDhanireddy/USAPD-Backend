@@ -89,4 +89,13 @@ GROUP BY
     YEAR
 ORDER BY
     YEAR,
-    SEASON;
+    CASE
+    WHEN season = 'Spring'
+    THEN '1'
+    WHEN season = 'Summer'
+    THEN '2'
+    WHEN season = 'Fall'
+    THEN '3'
+    WHEN season = 'Winter'
+    THEN '4'
+END;
