@@ -1,41 +1,92 @@
-SELECT YEAR,
-    season,
-    round(avg(meanval), 3) AS meanValue
+SELECT
+    YEAR,
+    SEASON,
+    ROUND(AVG(MEANVAL), 3) AS MEANVALUE
 FROM
-    (SELECT dateData.year,
-    dateData.week,
-    avg(ap.arithmetic_mean) AS meanval,
+    (
+    SELECT
+    TO_CHAR(AP.DATE_STR2, 'YYYY') AS YEAR,
+    TO_CHAR(AP.DATE_STR2, 'WW') AS WEEK,
+    AVG(AP.ARITHMETIC_MEAN) AS MEANVAL,
     CASE
-    WHEN dateData.week between 11 and 24 THEN 'Spring'
-    WHEN dateData.week between 25 and 37 THEN 'Summer'
-    WHEN dateData.week between 38 and 50 THEN 'Fall'
-    WHEN dateData.week >= 51 OR dateData.week < 11 THEN 'Winter'
-    END AS season
+    WHEN
+    TO_CHAR(AP.DATE_STR2, 'WW') BETWEEN 11 AND 24
+    THEN
+    'Spring'
+    WHEN
+    TO_CHAR(AP.DATE_STR2, 'WW') BETWEEN 25 AND 37
+    THEN
+    'Summer'
+    WHEN
+    TO_CHAR(AP.DATE_STR2, 'WW') BETWEEN 38 AND 50
+    THEN
+    'Fall'
+    WHEN
+    TO_CHAR(AP.DATE_STR2, 'WW') >= 51
+    OR TO_CHAR(AP.DATE_STR2, 'WW') < 11
+    THEN
+    'Winter'
+    END
+    AS SEASON
     FROM
-    (SELECT arithmetic_mean,
-    date_id
-    FROM VDHAVALESWARAPU.observation o
-    WHERE (o.pollutant_code =
-    (SELECT pollutant_code
-    FROM VDHAVALESWARAPU.pollutant p
-    WHERE (p.pollutant_name = :pollutant) ))
-    AND (o.site_code in
-    (SELECT site_code
+    (
+    SELECT
+    ARITHMETIC_MEAN,
+    DATE_STR2
     FROM
-    (SELECT site_code
-    FROM VDHAVALESWARAPU.State state
-    JOIN VDHAVALESWARAPU.County county ON county.state_code = state.state_code
-    JOIN VDHAVALESWARAPU.Site site ON site.county_code = county.county_code
-    WHERE state_name = :state)))) ap
+    VDHAVALESWARAPU.OBSERVATION O
+    WHERE
+    (
+    O.POLLUTANT_CODE =
+    (
+    SELECT
+    POLLUTANT_CODE
+    FROM
+    VDHAVALESWARAPU.POLLUTANT P
+    WHERE
+    (
+    P.POLLUTANT_NAME = :pollutant
+    )
+    )
+    )
+    AND
+    (
+    O.SITE_CODE IN
+    (
+    SELECT
+    SITE_CODE
+    FROM
+    (
+    SELECT
+    SITE_CODE
+    FROM
+    VDHAVALESWARAPU.STATE STATE
     JOIN
-    (SELECT dc.date_id,
-    dc.year,
-    to_char(dc.datestr, 'WW') WEEK
-    FROM VDHAVALESWARAPU.datecollected dc where dc.datestr between :startDate and :endDate) dateData ON ap.date_id = dateData.date_id
-    GROUP BY dateData.year,
-    dateData.week
-    ORDER BY dateData.year)
-GROUP BY season,
+    VDHAVALESWARAPU.COUNTY COUNTY
+    ON COUNTY.STATE_CODE = STATE.STATE_CODE
+    JOIN
+    VDHAVALESWARAPU.SITE SITE
+    ON SITE.COUNTY_CODE = COUNTY.COUNTY_CODE
+    WHERE
+    STATE_NAME = :state
+    )
+    )
+    )
+    AND
+    (
+    O.DATE_STR2 BETWEEN :startDate AND :endDate
+    )
+    )
+    AP
+    GROUP BY
+    TO_CHAR(AP.DATE_STR2, 'YYYY'),
+    TO_CHAR(AP.DATE_STR2, 'WW')
+    ORDER BY
     YEAR
-ORDER BY YEAR,
-    season;
+    )
+GROUP BY
+    SEASON,
+    YEAR
+ORDER BY
+    YEAR,
+    SEASON;
