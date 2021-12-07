@@ -10,12 +10,7 @@ import java.util.List;
 
 @Repository
 public interface getAllTuplesRepository extends JpaRepository<Test, Integer> {
-        @Query(value = "SELECT SUM(COUNT) FROM " +
-                "(SELECT table_name," +
-                    "to_number(extractvalue(xmltype(dbms_xmlgen.getxml('select count(*) c FROM '||owner||'.'||table_name)),'/ROWSET/ROW/C'))" +
-                    "AS count " +
-                "FROM all_tables " +
-                "WHERE owner = 'VDHAVALESWARAPU')",
+        @Query(value = "select sum(num_rows)as countTotal from (SELECT table_name,num_rows FROM all_tables WHERE owner = 'VDHAVALESWARAPU')",
             nativeQuery = true)
     String getAllTuples();
 

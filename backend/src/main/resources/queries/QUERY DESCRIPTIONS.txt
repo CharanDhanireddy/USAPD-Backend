@@ -1,0 +1,13 @@
+QUERY 1: Seasonal pollutant trends 
+DESCRIPTION 1: Study how the levels of pollutants has varied over the seasons (Spring, Summer, Fall, Winter) over a given time period.
+QUERY 2: Day of the week pollution trends
+DESCRIPTION 2: Study the trend: how average pollutant levels over different days of the week, have changed over the last 5 year period.
+QUERY 3: Hourly pullotion trends
+DESCRIPTION 3: Study the trend: which hour of the day, on an avergage, had the highest level of the pollutant over a selected time period.
+QUERY 4: Compare state pollution levels
+DESCRIPTION 4: Compare levels of a single pollutant between between multiple (upto 4) states over a given time period.
+QUERY 5: Recommended AQI levels
+DESCRIPTION 5: Study the number of days, in a state, where the AQI level was higher than a threshold value.
+QUERY 6: Map depiction: States that in the year 2020 had average AQI higher(red) or lower(green) than the recommended safe value.
+QUERY 7: Population vs pollution trends
+DESCRIPTION 7: Study the trend: Has the change in population of a state, resulted in consequent changes in the pollution levels for that state.
