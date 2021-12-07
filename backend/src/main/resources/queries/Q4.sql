@@ -15,7 +15,7 @@ FROM
     FROM vdhavaleswarapu.state state
     JOIN vdhavaleswarapu.county county ON county.state_code = state.state_code
     JOIN vdhavaleswarapu.site site ON site.county_code = county.county_code
-    WHERE state_name IN ('Florida', '') )))
+    WHERE state_name IN :state_list )))
     AND (o.date_str2 BETWEEN :startDate AND :endDate)) multiStatePollutantData
     JOIN
     (SELECT site_code,
